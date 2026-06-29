@@ -40,7 +40,7 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME_PHP }}:latest
-          ${{ env.IMAGE_NAME_PHP }}:${{ github.sha }}
+            ${{ env.IMAGE_NAME_PHP }}:${{ github.sha }}
 
       # 4. Building nginx
       - name: Bulding and pushing nginx image
