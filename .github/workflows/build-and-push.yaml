@@ -1,0 +1,55 @@
+name: Build and Push Docker images
+
+on:
+  push:
+    branches:
+      - main # pipeline uruchomi sie przy kazdym pushu do galezi main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME_PHP: ghcr.io/${{ github.repository }}-php
+  IMAGE_NAME_NGINX: ghcr.io/${{ github.repository }}-nginx
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permisions:
+      contents: read
+      packages: write
+    
+    steps:
+      # 1. Downloading code from repo to bulding machine
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Loggingg into GHCR
+      # GITHUB delivers GITHUB_TOKEN automaticaly
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 3. Building and pushing php image
+      - name: Build and push PHP image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./images/php/Dockerfile.php
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME_PHP }}:latest
+          ${{ env.IMAGE_NAME_PHP }}:${{ github.sha }}
+
+      # 4. Building nginx
+      - name: Bulding and pushing nginx image
+        uses: docker/build-and-push-action@v5
+        with:
+          context: .
+          file: ./images/nginx/Dockerfile.nginx
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME_NGINX }}:latest
+            ${{ env.IMAGE_NAME_NGINX }}:${{ github.sha }}
+

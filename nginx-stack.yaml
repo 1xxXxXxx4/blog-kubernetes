@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: www-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-php
+  namespace: www-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: server-www-php
+  template:
+    spec:
+      containers:
+        image: 
