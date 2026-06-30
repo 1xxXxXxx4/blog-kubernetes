@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: nginx-php
   namespace: www-server
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: 3
   selector:
@@ -16,14 +18,20 @@ spec:
       imagePullSecrets:
         - name: ghcr-secret 
       containers:
+
       - name: nginx-deplo
         image: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
-
+        
       - name: php-deplo
         image: ghcr.io/1xxxxxxx4/blog-kubernetes-php:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 9000
+        env:
+          - name: DB_NAME
+            vauleFrom: { configMapRef: { name: app-dynamic-config, key: database_name } }
+          - name: DB_USER
+            valueFrom: { configMapRef: { name: app-dynamic-config, key: database_owner } }
