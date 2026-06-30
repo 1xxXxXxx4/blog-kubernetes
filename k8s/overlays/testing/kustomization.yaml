@@ -16,3 +16,4 @@ secretGenerator:
     literals:
       - username=test_user
       - password=test_password_123
+      - database="test_db_blog"

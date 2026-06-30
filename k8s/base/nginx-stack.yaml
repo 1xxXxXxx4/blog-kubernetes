@@ -32,6 +32,19 @@ spec:
           - containerPort: 9000
         env:
           - name: DB_NAME
-            vauleFrom: { configMapRef: { name: app-dynamic-config, key: database_name } }
+            vauleFrom:
+              secretKeyRef:
+                name: pg-app-secret
+                key: username
+          
           - name: DB_USER
-            valueFrom: { configMapRef: { name: app-dynamic-config, key: database_owner } }
+            valueFrom: 
+              secretKeyRef:
+                name: pg-app-secret
+                key: password
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: app-dynamic-config
+                key: database_name
+

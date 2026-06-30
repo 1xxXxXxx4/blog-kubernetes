@@ -20,9 +20,8 @@ spec:
 
   bootstrap:
     initdb:
-      databaseRef: { name: app-dynamic-config, key: database_name } 
-      ownerRef: { name: app-dynamic-config, key: database_owner }
-      secret: { name: pg-app-secret }
+      secret:
+        name: pg-app-secret
 
   storage: 
     storageClass: longhorn
