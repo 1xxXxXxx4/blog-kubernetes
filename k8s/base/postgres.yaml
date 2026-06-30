@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: namespace
+metadata:
+  name: postgres
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql
+  namespace: postgres
+  annotations:
+    # sync-wave = plugin ordering implementation to kubernetes cluster
+    argocd.argoproj.io/sync-wave: "0"
+
+spec:
+  description: "Postgresdb"
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-system-trixie
+  imagePullPolicy: IfNotPresent
+  instances: 3
+
+  bootstrap:
+    initdb:
+      databaseRef: { name: app-dynamic-config, key: database_name } 
+      ownerRef: { name: app-dynamic-config, key: database_owner }
+      secret: { name: pg-app-secret }
+
+  storage: 
+    storageClass: longhorn
+    size: 2Gi 
+---

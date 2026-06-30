@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-php
+  namespace: www-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: server-www-php
+  template:
+    metadata:
+      labels:
+        app: server-www-php
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret 
+      containers:
+      - name: nginx-deplo
+        image: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+
+      - name: php-deplo
+        image: ghcr.io/1xxxxxxx4/blog-kubernetes-php:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 9000
