@@ -27,3 +27,23 @@ spec:
         imagePullPolicy: Always
         ports:
           - containerPort: 9000
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql
+  namespace: postgres
+spec:
+  description: "Postgresdb"
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-system-trixie
+  imagePullPolicy: IfNotPresent
+  instances: 3
+
+  bootstrap:
+    initdb:
+      database: ${DB_NAME}
+      owner: ${DB_OWNER}
+      secret:
+        name: db-pass
+---
+
