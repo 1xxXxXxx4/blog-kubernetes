@@ -1,0 +1,20 @@
+# k8s/overlays/prod/configMap-managment
+apiVersion: externam-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: pg-db-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: vault-backend
+    kind: secretStore
+  target:
+    name: app-dynamic-config
+    kind: configMap
+  data:
+    - secretKey: database_name
+      remoteRef: { key: prod/postgres, property: db_name }
+    - secretKey: database_owner
+      remoteRef: { key: prod/postgres, property: db_owner }
