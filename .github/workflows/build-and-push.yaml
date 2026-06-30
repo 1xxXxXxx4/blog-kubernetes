@@ -64,7 +64,7 @@ jobs:
       # 5.c
       - name: Create Postgres namespace
         run: |
-          kubectl create namespace postgres
+          kubectl create namespace postgres --dry-run=client -o yaml | kubectl apply -f -
       # 5.d
       - name: Test deploy manifests via kustomize
         run: |

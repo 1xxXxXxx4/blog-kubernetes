@@ -32,7 +32,7 @@ spec:
           - containerPort: 9000
         env:
           - name: DB_NAME
-            vauleFrom:
+            valueFrom:
               secretKeyRef:
                 name: pg-app-secret
                 key: username
