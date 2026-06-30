@@ -10,7 +10,7 @@ spec:
   refreshInterval: "1h"
   secretStoreRef:
     name: vault-backend
-    kind: secretStore
+    kind: SecretStore
   target:
     name: app-dynamic-config
     kind: configMap
