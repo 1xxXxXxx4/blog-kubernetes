@@ -31,20 +31,20 @@ spec:
         ports:
           - containerPort: 9000
         env:
-          - name: DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: pg-app-secret
-                key: username
-          
           - name: DB_USER
             valueFrom: 
               secretKeyRef:
                 name: pg-app-secret
+                key: username
+          
+          - name: DB_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: pg-app-secret
                 key: password
+
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
-                name: app-dynamic-config
-                key: database_name
-
+                name: pg-app-secret
+                key: database
