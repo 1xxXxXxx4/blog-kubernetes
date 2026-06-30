@@ -58,9 +58,9 @@ jobs:
       # 5.b
       - name: Install CloudNativePG operator
         run: |
-          kubectl apply -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/releases/cnpg-1.23.0.yaml
+          kubectl apply --server-side -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/releases/cnpg-1.23.0.yaml
           echo "Czekam na uruchomienie operatora CNPG..."
-          kubectl wait --namespace cnpg-system --for=condidtion=ready pod -l app.kubernetes.io/name=cloudnative-pg --timeout=120s
+          kubectl wait --namespace cnpg-system --for=condition=ready pod -l app.kubernetes.io/name=cloudnative-pg --timeout=120s
       # 5.c
       - name: Create Postgres namespace
         run: |
