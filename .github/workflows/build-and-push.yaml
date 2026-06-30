@@ -68,7 +68,7 @@ jobs:
       # 5.d
       - name: Test deploy manifests via kustomize
         run: |
-          kubectl apply -f k8s/overlas/testing
+          kubectl apply -f k8s/overlays/testing
       # 5.e
       - name: Verify test deployment
         run: |
