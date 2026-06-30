@@ -52,7 +52,7 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME_NGINX }}:latest
             ${{ env.IMAGE_NAME_NGINX }}:${{ github.sha }}
-      # 5. Test deploy     
+      # 5.a Test deploy     
       - name: Create KIND cluster
         uses: helm/kind-action@v1.12.0
       # 5.b
