@@ -16,6 +16,13 @@ spec:
     kind: configMap
   data:
     - secretKey: database_name
-      remoteRef: { key: prod/postgres, property: db_name }
+      remoteRef:
+        key: prod/postgres
+        property: config
+        jsonPkg: db_name
+
     - secretKey: database_owner
-      remoteRef: { key: prod/postgres, property: db_owner }
+      remoteRef: 
+        key: prod/postgres
+        property: config
+        jsonPkg: db_owner
