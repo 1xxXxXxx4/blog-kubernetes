@@ -17,13 +17,15 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:18.4-system-trixie
   imagePullPolicy: IfNotPresent
   instances: 3
-
+  
+  superuserSecret:
+    name: pg-root
   bootstrap:
     initdb:
+      database: blog-db
       secret:
-        name: pg-app-secret
+        name: pg-user
 
   storage: 
     storageClass: longhorn
     size: 2Gi 
----

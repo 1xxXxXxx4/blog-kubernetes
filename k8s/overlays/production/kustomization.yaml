@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: postgres
 resources:
   - ../../base
-  - configMap-Managment.yaml
   - secrets-managment.yaml
