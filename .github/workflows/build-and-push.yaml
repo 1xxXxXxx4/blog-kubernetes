@@ -2,8 +2,8 @@ name: Build and Push Docker images
 
 on:
   push:
-    branches:
-      - main 
+    branches: 
+      - main
       - adding-php-code
 env:
   REGISTRY: ghcr.io
