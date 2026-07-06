@@ -1,0 +1,37 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      postInitApplicationSQL:
+        - |
+          CREATE TABLE IF NOT EXISTS users (
+              id SERIAL PRIMARY KEY,
+              username VARCHAR(50) NOT NULL,
+              email VARCHAR(100) NOT NULL
+          );
+        - |
+          INSERT INTO users (username, email) VALUES 
+          ('github_action_runner', 'actions@example.com')
+          ON CONFLICT DO NOTHING;
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-php
+spec:
+  # Na testy w GitHub Actions 1 replika podu PHP/Nginx zazwyczaj w zupełności wystarczy
+  replicas: 1 
+  template:
+    spec:
+      containers:
+        - name: php-deplo
+          env:
+            # Zmieniamy z pobierania z sekretu na bezpośrednią wartość tekstową
+            - name: DB_HOST
+              value: "postgresql-rw"
+            - name: DB_PORT
+              value: "5432"

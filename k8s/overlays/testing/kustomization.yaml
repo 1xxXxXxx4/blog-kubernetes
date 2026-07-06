@@ -5,15 +5,19 @@ kind: Kustomization
 namespace: postgres
 
 resources:
-  - ../../base
-configMapGenerator:
-  - name: app-dynamic-config
-    literals:
-      - database_name=test_db
-      - database_owner=test_user
+  - ../../base/postgres.yaml
+  - ../../base/nginx-stack.yaml
 secretGenerator:
-  - name: pg-app-secret
+  - name: pg-root
+    namespace: postgres
     literals:
-      - username=test_user
-      - password=test_password_123
-      - database="test_db_blog"
+      - username=postgres
+      - password=super-safe-root-password-123
+  - name: pg-user
+    namespace: postgres
+    literals:
+      - username=blog-db
+      - password=blog_password_123
+
+patches:
+  - path: patch-testing.yaml
