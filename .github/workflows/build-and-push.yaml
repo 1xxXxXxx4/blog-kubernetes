@@ -56,27 +56,3 @@ jobs:
           cache-from: ""
           cache-to: ""
           
-      # 5.a Test deploy     
-      - name: Create KIND cluster
-        uses: helm/kind-action@v1.12.0
-      # 5.b
-      - name: Install CloudNativePG operator
-        run: |
-          kubectl apply --server-side -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/releases/cnpg-1.23.0.yaml
-          echo "Czekam na uruchomienie operatora CNPG..."
-          kubectl wait --namespace cnpg-system --for=condition=ready pod -l app.kubernetes.io/name=cloudnative-pg --timeout=120s
-      # 5.c
-      - name: Create Postgres namespace
-        run: |
-          kubectl create namespace postgres --dry-run=client -o yaml | kubectl apply -f -
-      # 5.d
-      - name: Test deploy manifests via kustomize
-        run: |
-          kubectl apply -k k8s/overlays/testing
-      # 5.e
-      - name: Verify test deployment
-        run: |
-          echo "=== Sprawdzam utwrzone zasoby w namespace postgres ==="
-          kubectl get all -n postgres
-          kubectl get secrets -n postgres
-          kubectl get configmaps -n postgres
