@@ -1,31 +1,49 @@
 <?php
-// Bezpieczna konfiguracja - pobieramy dane wstrzyknięte przez Kubernetes/ESO
-$host     = getenv('DB_HOST') ?: 'localhost';
-$db       = getenv('DB_NAME') ?: 'nazwa_twojej_bazy';
-$user     = getenv('DB_USER') ?: 'twoj_uzytkownik';
-$password = getenv('DB_PASSWORD') ?: ''; // Hasło zostanie pobrane ze zmiennej środowiskowej
-$port     = getenv('DB_PORT') ?: '5432';
+// 1. Mniej wrażliwe dane pobieramy ze zmiennych środowiskowych klastra
+$host = getenv('DB_HOST') ?: 'localhost';
+$db   = getenv('DB_NAME') ?: 'example-db-name';
+$port = getenv('DB_PORT') ?: '1111';
 
-// Ciąg połączenia (DSN) dla PostgreSQL
+// Ścieżki do bezpiecznych plików zamontowanych w RAM przez Kubernetes
+$secretDir = '/magic-variables/secrets';
+$userFile     = "$secretDir/db-user";
+$passwordFile = "$secretDir/db-pass";
+
+// 2. Bezpieczne odczytywanie UŻYTKOWNIKA
+if (file_exists($userFile)) {
+    $user = trim(file_get_contents($userFile));
+} else {
+    $user = getenv('DB_USER') ?: 'user';
+}
+
+// 3. Bezpieczne odczytywanie HASŁA
+if (file_exists($passwordFile)) {
+    $password = trim(file_get_contents($passwordFile));
+} else {
+    $password = getenv('DB_PASSWORD') ?: '';
+}
+
+// Połączenie PDO
 $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
-
 $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Wyrzucaj wyjątki w przypadku błędów
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Zwracaj wyniki jako tablice asocjacyjne
-    PDO::ATTR_EMULATE_PREPARES   => false,                  // Wyłącz emulację przygotowanych zapytań
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
 try {
-    // Tworzenie połączenia z bazą
     $pdo = new PDO($dsn, $user, $password, $options);
     
-    // Pobieramy posty od najnowszego (sortowanie po ID malejąco)
+    // Pobranie postów
     $stmt = $pdo->query('SELECT id, title, content, created_at FROM posts ORDER BY id DESC');
     $posts = $stmt->fetchAll();
 
 } catch (PDOException $e) {
-    // W razie błędu połączenia, wyświetlamy komunikat i zatrzymujemy stronę
-    die("Błąd połączenia z bazą danych: " . $e->getMessage());
+    // Logujemy pełny błąd wewnętrznie (do stderr kontenera/kustra K8s)
+    error_log("Błąd bazy danych: " . $e->getMessage());
+    
+    // Użytkownikowi na stronie pokazujemy bezpieczny, ogólny komunikat
+    die("Portal jest chwilowo niedostępny.");
 }
 ?>
 <!DOCTYPE html>

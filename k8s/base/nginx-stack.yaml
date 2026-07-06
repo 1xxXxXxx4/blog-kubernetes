@@ -35,9 +35,21 @@ spec:
             secretKeyRef:
               key: DB_HOST
               name: DB_HOST
-
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
               key: DB_PORT
               name: DB_PORT
+        volumeMounts:
+        - name: db-secret-volume
+          mountPath: "/magic-variables/secrets"
+          readOnly: true
+        volumes:
+        - name: db-secret-volume
+          secret: 
+            secretName: user-secret
+            items:
+            - key: username
+              path: db-user
+            - key: password
+              path: db-pass
