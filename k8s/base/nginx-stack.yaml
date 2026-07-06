@@ -18,15 +18,26 @@ spec:
       imagePullSecrets:
         - name: ghcr-secret 
       containers:
-
       - name: nginx-deplo
         image: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
-        
+
       - name: php-deplo
         image: ghcr.io/1xxxxxxx4/blog-kubernetes-php:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 9000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              key: DB_HOST
+              name: DB_HOST
+
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              key: DB_PORT
+              name: DB_PORT
