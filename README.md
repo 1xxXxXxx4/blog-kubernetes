@@ -4,4 +4,4 @@
 ### db-backups
 ### monitoring
 ### resources managment
-### update php/nginx image with custom php code with some kind of portal like blog structures
+### update php/nginx image with custom php code with some kind of portal structures v.0.1
