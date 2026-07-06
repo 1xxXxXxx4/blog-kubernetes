@@ -5,8 +5,7 @@ kind: Kustomization
 namespace: postgres
 
 resources:
-  - ../../base/postgres.yaml
-  - ../../base/nginx-stack.yaml
+  - ../../base
 secretGenerator:
   - name: pg-root
     namespace: postgres
