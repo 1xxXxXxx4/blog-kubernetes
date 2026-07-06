@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-cfg
+  namespace: postgres
+data: 
+  postInitSQLmap.sql: |
+    -- Tworzenie tabeli dla naszych postów
+    CREATE TABLE posts (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      content TEXT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+
+    -- Wrzucamy przykładowe dane na start
+    INSERT INTO posts (title, content) VALUES 
+    ('Pierwsze kroki w programowaniu w PHP', 'PHP to niesamowicie popularny język skryptowy. Choć wielu wróżu mu koniec, on wciąż napędza ogromną część internetu i stale się rozwija, oferując świetną wydajność.'),
+    ('Dlaczego PostgreSQL to świetny wybór?', 'PostgreSQL to zaawansowany, obiektowo-relacyjny system bazy danych. Słynie ze swojej niezawodności, potężnych funkcji i świetnego wsparcia dla standardów SQL.'),
+    ('Jak budować responsywne portale', 'Responsywność (RWD) to standard w dzisiejszym web devie. Dzięki użyciu nowoczesnych narzędzi, takich jak Flexbox czy Grid, możemy łatwo dostosować widok do każdego ekranu.');
