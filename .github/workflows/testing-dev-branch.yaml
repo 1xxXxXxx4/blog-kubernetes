@@ -1,0 +1,39 @@
+name: Testing dev branch
+
+on:
+  push:
+    branches: 
+      - dev
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME_PHP: ghcr.io/1xxxxxxx4/blog-kubernetes-php-dev
+  IMAGE_NAME_NGINX: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx-dev
+
+jobs:
+  k8s-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      # 1. Download code from repo, branch dev
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # 2. Loggingg into GHCR
+      # GITHUB delivers GITHUB_TOKEN automaticaly
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # 3. Creating KIND cluster
+      - name: create kind cluster
+        uses: helm/kind-action@v1.10.0
+        with:
+          cluster_name: kind-dev-cluster
+      # 4. Creating dummy secrets
+      - name: dummy secrets nessesery to dry run
+        run: |
+          
+          
