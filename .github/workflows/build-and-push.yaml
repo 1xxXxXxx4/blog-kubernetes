@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # pipeline uruchomi sie przy kazdym pushu do galezi main
+      - adding-php-code
 
 env:
   REGISTRY: ghcr.io
