@@ -25,6 +25,9 @@ spec:
       database: blog-db
       secret:
         name: pg-user
+      configMapRefs:
+        key: postInitSQLmap.sql
+        name: pg-cfg
 
   storage: 
     storageClass: longhorn
