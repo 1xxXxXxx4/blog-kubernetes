@@ -1,4 +1,4 @@
-name: Build and Push Docker images
+name: 1.Build and Push Docker images branch dev
 
 on:
   push:

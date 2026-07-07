@@ -4,5 +4,12 @@ metadata:
   name: nginx-php
   namespace: postgres
 spec:
-  # Na testy w GitHub Actions 1 replika podu PHP/Nginx zazwyczaj w zupełności wystarczy
-  replicas: 1    
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: nginx-deplo
+        image: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx-dev:latest
+      - name: php-deplo
+        image: ghcr.io/1xxxxxxx4/blog-kubernetes-php-dev:latest
+        

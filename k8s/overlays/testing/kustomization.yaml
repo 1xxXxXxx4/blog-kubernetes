@@ -9,8 +9,8 @@ resources:
   - dummy-secrets.yaml
 
 patches:
-  - path: patch-nginx.yaml
-  - target:
+  - path: patch-nginx.yaml # that form in case of patching entire yaml file
+  - target:                # the other form for patching selected key words
       kind: Cluster
       name: postgresql
       namespace: postgres
