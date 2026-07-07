@@ -9,5 +9,5 @@ resources:
   - dummy-secrets.yaml
 
 patches:
-  - path: patch-testing.yaml
-
+  - path: patch-postgres.yaml
+  - path: patch-nginx.yaml
