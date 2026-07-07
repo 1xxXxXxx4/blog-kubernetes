@@ -1,7 +1,8 @@
-# building www server for CI/CD pipeline in modern way
-## Next to do:
+# learning CI/CD combined with github.actions, argocd, kustomize, networking and cluster managment. 
+## K3s cluster im deplying my manifest's onto is equiped with cnpg.io, eso, vault, longhorn, argocd, grafana and helm operators.
+
+# Next to do:
 ### default-deny and networking rules, api gateway.
-### db-backups
 ### monitoring
 ### resources managment
-### update php/nginx image with custom php code with some kind of portal structures v.0.1
+### php code v.0.1 ( next registration/login panel ) 
