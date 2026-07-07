@@ -6,6 +6,7 @@ namespace: postgres
 
 resources:
   - ../../base
+  - dummy-secrets.yaml
 
 patches:
   - path: patch-testing.yaml
