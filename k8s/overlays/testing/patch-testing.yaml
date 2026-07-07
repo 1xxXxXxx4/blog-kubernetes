@@ -15,31 +15,5 @@ metadata:
 spec:
   # Na testy w GitHub Actions 1 replika podu PHP/Nginx zazwyczaj w zupełności wystarczy
   replicas: 1           
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: pg-root
-  namespace: postgres
-data:
-  password: cGFzc3dvcmQtZm9yLXJvb3QtZGV2
-  username: cG9zdGdyZXM=
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: pg-user
-  namespace: postgres
-data:
-  password: cGFzc3dvcmQtZm9yLXVzZXItZGV2
-  username: YmxvZy1kYg==
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: prod-specs
-  namespace: postgres
-data:
-  DB_HOST: cG9zdGdyZXNxbC1ydw==
-  DB_PORT: NTQzMg==
+
 
