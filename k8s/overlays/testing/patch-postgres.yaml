@@ -1,5 +1,5 @@
 - op: remove 
-  path: /spec/bootstrap/initdb/configMaprefs
+  path: /spec/bootstrap/initdb/configMapRefs
 
 - op: remove
   path: /spec/storage/storageClass
