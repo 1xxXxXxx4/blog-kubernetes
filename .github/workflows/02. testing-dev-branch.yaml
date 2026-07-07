@@ -3,8 +3,8 @@ name: Testing dev branch
 on:
   workflow_run:
     workflows: ["1.Build and Push Docker images branch dev"]
-      types: 
-        - completed
+    types:
+      - completed
       
     env:
   REGISTRY: ghcr.io
