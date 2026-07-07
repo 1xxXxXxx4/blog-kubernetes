@@ -5,8 +5,8 @@ on:
     workflows: ["1.Build and Push Docker images branch dev"]
     types:
       - completed
-      
-    env:
+
+env:
   REGISTRY: ghcr.io
   IMAGE_NAME_PHP: ghcr.io/1xxxxxxx4/blog-kubernetes-php-dev
   IMAGE_NAME_NGINX: ghcr.io/1xxxxxxx4/blog-kubernetes-nginx-dev
