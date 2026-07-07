@@ -6,17 +6,5 @@ namespace: postgres
 
 resources:
   - ../../base
-secretGenerator:
-  - name: pg-root
-    namespace: postgres
-    literals:
-      - username=postgres
-      - password=super-safe-root-password-123
-  - name: pg-user
-    namespace: postgres
-    literals:
-      - username=blog-db
-      - password=blog_password_123
-
-patches:
-  - path: patch-testing.yaml
+  - patch-testing.yaml
+  

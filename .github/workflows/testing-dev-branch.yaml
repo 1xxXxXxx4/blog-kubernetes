@@ -19,6 +19,12 @@ jobs:
       # 1. Download code from repo, branch dev
       - name: Checkout code
         uses: actions/checkout@v4
+        with: 
+          repository: 
+          ref: 'dev'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: '1'
+
       # 2. Loggingg into GHCR
       # GITHUB delivers GITHUB_TOKEN automaticaly
       - name: Log in to the Container registry
@@ -27,13 +33,21 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       # 3. Creating KIND cluster
       - name: create kind cluster
         uses: helm/kind-action@v1.10.0
         with:
           cluster_name: kind-dev-cluster
-      # 4. Creating dummy secrets
-      - name: dummy secrets nessesery to dry run
+
+      # 4. Install cnpg.io on my cluster
+      - name: install postgresql 
         run: |
-          
+          helm repo add cnpg https://cloudnative-pg.github.io/charts
+          helm repo update
+          helm upgrade --install cnpg cnpg/cloudnative-pg \
+            --namespace cnpg-system \
+            --create-namespace
+      
+      
           
