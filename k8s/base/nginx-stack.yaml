@@ -30,21 +30,21 @@ spec:
         ports:
           - containerPort: 9000
         env:
-        - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              key: DB_HOST
-              name: prod-specs
-        - name: DB_PORT
-          valueFrom:
-            secretKeyRef:
-              key: DB_PORT
-              name: prod-specs
-          volumeMounts:
-          - name: db-secret-volume
-            mountPath: "/magic-variables/secrets"
-            readOnly: true
-        volumes:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: DB_HOST
+                name: prod-specs
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                key: DB_PORT
+                name: prod-specs
+        volumeMounts:
+        - name: db-secret-volume
+          mountPath: "/magic-variables/secrets"
+          readOnly: true
+      volumes:
         - name: db-secret-volume
           secret: 
             secretName: user-secret

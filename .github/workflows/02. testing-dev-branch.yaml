@@ -50,7 +50,15 @@ jobs:
             --namespace cnpg-system \
             --create-namespace
       
-      # 5. applying resources into cluster
+      # 5. Wait for CNPG operator to get ready
+      - name: Wait for CNPG operator 
+        run : |
+          kubectl wait --namespace cnpg-system \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/name=cloudnative-pg \
+            --timeout=120s
+
+      # 6. applying resources into cluster
       - name: applying resources with kustomize
         run: |
           kubectl apply -k ./k8s/overlays/testing
