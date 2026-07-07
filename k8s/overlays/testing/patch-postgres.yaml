@@ -5,7 +5,8 @@ metadata:
   namespace: postgres
 spec:
   instances: 1
-  storage: 1Gi    
+  storage: 
+    size: 1Gi    
 
 
 
