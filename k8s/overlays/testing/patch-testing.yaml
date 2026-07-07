@@ -5,6 +5,7 @@ metadata:
   namespace: postgres
 spec:
   instances: 1
+  storage: 1Gi    
 ---
 apiVersion: apps/v1
 kind: Deployment
