@@ -1,12 +1,9 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: postgresql
-  namespace: postgres
-spec:
-  instances: 1
-  storage: 
-    size: 1Gi    
+- op: remove 
+  path: /spec/bootstrap/initdb/configMaprefs
 
+- op: remove
+  path: /spec/storage/storageClass
 
-
+- op: replace
+  path: /spec/instances
+  value: 1
