@@ -6,5 +6,7 @@ namespace: postgres
 
 resources:
   - ../../base
-  - patch-testing.yaml
-  
+
+patches:
+  - path: patch-testing.yaml
+

@@ -51,7 +51,7 @@ jobs:
             --create-namespace
       
       # 5. applying resources into cluster
-      - name: applying resources
+      - name: applying resources with kustomize
         run: |
           kubectl apply -k ./k8s/overlays/testing
       
