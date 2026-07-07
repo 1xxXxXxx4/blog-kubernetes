@@ -1,12 +1,3 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: postgresql
-  namespace: postgres
-spec:
-  instances: 1
-  storage: 1Gi    
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,6 +5,4 @@ metadata:
   namespace: postgres
 spec:
   # Na testy w GitHub Actions 1 replika podu PHP/Nginx zazwyczaj w zupełności wystarczy
-  replicas: 1           
-
-
+  replicas: 1    
